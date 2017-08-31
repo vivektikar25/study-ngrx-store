@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddsService } from './../core/adds.service';
+import { Observable } from 'rxjs/Observable';
+
+interface AppState {
+  data: any[]
+}
 
 @Component({
   selector: 'app-post-add',
@@ -8,8 +14,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PostAddComponent implements OnInit {
   postAddForm: FormGroup;
+  adds: Observable<AppState>;
 
-  constructor(public fb: FormBuilder) { }
+  constructor(
+    public fb: FormBuilder,
+    public addsService: AddsService
+  ) {
+    this.adds = this.addsService.store.select('adds');
+   }
 
   ngOnInit() {
     this.postAddForm = this.fb.group({
@@ -24,7 +36,10 @@ export class PostAddComponent implements OnInit {
   }
 
   postAdd = () => {
-    console.log(this.postAddForm.controls.deviceSpecification.invalid);
+    this.addsService.store.dispatch({
+      type: 'POST',
+      payload: this.postAddForm.value
+    })
   };
 
 }

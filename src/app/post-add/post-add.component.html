@@ -31,4 +31,5 @@
       <button type="submit" (click)="postAdd()" class="btn btn-default">Submit</button>
     </form>
   </div>
+  {{ adds | async | json }}
 </div>
