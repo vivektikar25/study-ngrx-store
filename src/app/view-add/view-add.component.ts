@@ -14,9 +14,9 @@ interface AppState {
   styleUrls: ['./view-add.component.css']
 })
 export class ViewAddComponent implements OnInit {
-  // adds: Observable<AppState>;
-  adds;
-
+  adds: Observable<AppState>;
+  // adds;
+  
   constructor(
     public store: Store<AppState>,
     public addsService: AddsService
@@ -24,13 +24,8 @@ export class ViewAddComponent implements OnInit {
 
   ngOnInit() {
     console.log("In init");
-    this.addsService.store.select('adds').subscribe(
-      data => { 
-        this.adds = data;
-        console.log("Data is", data)
-      },
-      error => console.log("Error is", error)
-    )
+    // this.adds = this.addsService.store.dispatch({type: 'VIEW', payload: { }});
+    this.adds = this.addsService.store.select('adds');
   }
 
 }
