@@ -20,7 +20,7 @@ export class PostAddComponent implements OnInit {
     public fb: FormBuilder,
     public addsService: AddsService
   ) {
-    this.adds = this.addsService.store.select('adds');
+    this.adds = this.addsService.adds;
    }
 
   ngOnInit() {
@@ -36,10 +36,7 @@ export class PostAddComponent implements OnInit {
   }
 
   postAdd = () => {
-    this.addsService.store.dispatch({
-      type: 'POST',
-      payload: this.postAddForm.value
-    })
+    this.addsService.postAdd(this.postAddForm.value);
   };
 
 }
